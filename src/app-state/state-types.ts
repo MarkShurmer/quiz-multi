@@ -4,11 +4,30 @@ export type Answer = {
   answer: boolean;
 };
 
-export type ActivityState = {
-  type: ActivityType;
+export enum ActivityType {
+  Flow,
+  Wait,
+}
+
+export type ActivityAnswers = {
+  activity: number;
   answers: Array<Answer>;
+};
+
+export enum GameStatus {
+  NotStarted,
+  InFlowActivity,
+  InWaitActivity,
+  ShowResults,
+  ShowHome,
+}
+
+export type GameState = {
+  status: GameStatus;
+  answers: Array<ActivityAnswers>;
   currentRound: number;
   currentQuestion: number;
+  currentActivity: Activity;
 };
 
 export type Question = {
@@ -23,8 +42,6 @@ export type Round = {
   order: number;
   questions: Array<Question>;
 };
-
-export type ActivityType = 1 | 2;
 
 export type Activity =
   | {

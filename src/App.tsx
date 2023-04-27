@@ -1,18 +1,30 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { routes } from './routes/routes';
-import { ErrorFallback } from './error/ErrorFallback';
 import './App.css';
-import { ErrorBoundary } from 'react-error-boundary';
-
-// create the actual routes
-const router = createBrowserRouter(routes);
+import { useRecoilValue } from 'recoil';
+import { gameAtom } from './app-state/atoms';
+import { Home } from './home/Home';
+import { GameStatus } from './app-state/state-types';
+import { Round } from './round/Round';
+import { Score } from './score/Score';
+import { FlowActivity } from './flow-activity/FlowActivity';
 
 function App() {
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  );
+  const game = useRecoilValue(gameAtom);
+
+  const renderPage = () => {
+    switch (game.status) {
+      case GameStatus.NotStarted:
+      case GameStatus.ShowHome:
+        return <Home />;
+      case GameStatus.InFlowActivity:
+        return <FlowActivity />;
+      case GameStatus.InWaitActivity:
+        return <Round />;
+      default:
+        return <Score />;
+    }
+  };
+
+  return <>{renderPage()}</>;
 }
 
 export default App;

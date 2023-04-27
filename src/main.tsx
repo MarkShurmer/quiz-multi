@@ -4,11 +4,15 @@ import { RecoilRoot } from 'recoil';
 
 import './index.css';
 import App from './App';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallback } from './error/ErrorFallback';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <App />
+      </ErrorBoundary>
     </RecoilRoot>
   </React.StrictMode>
 );

@@ -1,32 +1,33 @@
-import { getApiUrl } from '../api/api-fetcher';
-import { useLoaderData } from 'react-router';
-import { Game } from '../app-state/state-types';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { gameAtom, questionsSelector } from '../app-state/atoms';
+import { Activity, GameState, GameStatus } from '../app-state/state-types';
+import { getActivityTypeGameStatus } from '../app-state/state-helpers';
 
-export async function loader() {
-  const resp = await fetch(getApiUrl());
-  if (resp.ok) {
-    return await resp.json();
-  }
-  throw new Error('Unable to load game data');
-}
+// export async function loader() {
+//   const resp = await fetch(getApiUrl());
+//   if (resp.ok) {
+//     return await resp.json();
+//   }
+//   throw new Error('Unable to load game data');
+// }
 
 export function Home() {
-  //const [questions, setQuestionState] = useRecoilState(questionsState);
-  const questions = useLoaderData() as Game;
+  const questions = useRecoilValue(questionsSelector);
+  const [gameState, setGameState] = useRecoilState<GameState>(gameAtom);
 
-  // useEffect(() => {
-  //   async () => {
-  //     const resp = await fetch(API_URL);
-  //     if (resp.ok) {
-  //       setQuestionState(await resp.json());
-  //     }
-  //   };
-  // }, []);
+  const startActivity = (act: Activity) => {
+    setGameState({
+      ...gameState,
+      status: getActivityTypeGameStatus(act),
+      currentActivity: act,
+      currentQuestion: 1,
+      currentRound: 1,
+    });
+  };
 
   return (
-    <section className="page-container">
+    <section className="page-container page-container-home">
       <header className="page-header">
         <h1>CAE</h1>
         <h2>{questions.name}</h2>
@@ -35,7 +36,9 @@ export function Home() {
       <ul className="list">
         {questions.activities.map((act) => (
           <li key={act.activity_name}>
-            <div className="item">{act.activity_name}</div>
+            <div className="item" onClick={() => startActivity(act)}>
+              {act.activity_name}
+            </div>
           </li>
         ))}
 
@@ -45,9 +48,13 @@ export function Home() {
           </li>
         ))}
       </ul>
-      <Link to="/results" aria-label="Results" className="results">
+      <button
+        aria-label="Results"
+        className="results"
+        disabled={gameState.status === GameStatus.NotStarted}
+      >
         RESULTS
-      </Link>
+      </button>
     </section>
   );
 }
