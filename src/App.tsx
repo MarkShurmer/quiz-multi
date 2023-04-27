@@ -1,10 +1,17 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { routes } from './routes/routes';
+import { ErrorFallback } from './error/ErrorFallback';
 import './App.css';
+import { ErrorBoundary } from 'react-error-boundary';
+
+// create the actual routes
+const router = createBrowserRouter(routes);
 
 function App() {
   return (
-    <>
-      <h1>CAE</h1>
-    </>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
   );
 }
 
