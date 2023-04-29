@@ -1,23 +1,23 @@
 import './App.css';
 import { useRecoilValue } from 'recoil';
-import { gameAtom } from './app-state/atoms';
-import { Home } from './home/Home';
+import { gameStatusAtom } from './app-state/atoms';
+import { HomePage } from './home/HomePage';
 import { GameStatus } from './app-state/state-types';
 import { Round } from './round/Round';
 import { Score } from './score/Score';
-import { FlowActivity } from './flow-activity/FlowActivity';
+import { FlowActivityPage } from './flow-activity/FlowActivityPage';
 
 function App() {
-  const game = useRecoilValue(gameAtom);
+  const gameStatus = useRecoilValue(gameStatusAtom);
 
   const renderPage = () => {
-    switch (game.status) {
+    switch (gameStatus) {
       case GameStatus.NotStarted:
       case GameStatus.ShowHome:
-        return <Home />;
+        return <HomePage />;
       case GameStatus.InFlowActivity:
-        return <FlowActivity />;
-      case GameStatus.InWaitActivity:
+        return <FlowActivityPage />;
+      case GameStatus.InRoundsActivity:
         return <Round />;
       default:
         return <Score />;

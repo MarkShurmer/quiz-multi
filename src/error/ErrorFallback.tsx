@@ -1,4 +1,3 @@
-import React from 'react';
 import './Error.css';
 
 export function ErrorFallback({ error }: { error: unknown }) {

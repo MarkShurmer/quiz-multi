@@ -1,0 +1,78 @@
+name: 🚀 Client
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - server/**/*
+  pull_request: {}
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  verify:
+    name: ⬣ Verify
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.5.0
+          cache: 'yarn'
+          cache-dependency-path: server/yarn.lock
+
+      - name: Run install
+        run: yarn install --frozen-lockfile
+
+      - name: Run lint
+        run: yarn lint
+
+      - name: Run typecheck
+        run: yarn typecheck
+
+      - name: Run test
+        run: yarn test:ci
+
+    name: 🚀 Deploy
+    runs-on: ubuntu-latest
+    needs: [verify, build]
+    # only build/deploy main branch on pushes
+    if: ${{ (github.ref == 'refs/heads/main' ) && github.event_name == 'push' }}
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 👀 Read app name
+        uses: SebRollen/toml-action@v1.0.0
+        id: app_name
+        with:
+          file: 'fly.toml'
+          field: 'app'
+
+      - name: 🚀 Deploy Staging
+        if: ${{ github.ref == 'refs/heads/dev' }}
+        uses: superfly/flyctl-actions@1.3
+        with:
+          args: 'deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: 🚀 Deploy Production
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: superfly/flyctl-actions@1.3
+        with:
+          args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

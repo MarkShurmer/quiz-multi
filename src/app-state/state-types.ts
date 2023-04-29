@@ -6,57 +6,50 @@ export type Answer = {
 
 export enum ActivityType {
   Flow,
-  Wait,
+  Rounds,
 }
-
-export type ActivityAnswers = {
-  activity: number;
-  answers: Array<Answer>;
-};
 
 export enum GameStatus {
   NotStarted,
   InFlowActivity,
-  InWaitActivity,
+  InRoundsActivity,
+  ShowEndOfRound,
   ShowResults,
   ShowHome,
 }
 
-export type GameState = {
-  status: GameStatus;
-  answers: Array<ActivityAnswers>;
+export type GameCurrents = {
   currentRound: number;
   currentQuestion: number;
-  currentActivity: Activity;
+  currentActivity: Activity | null;
 };
 
-export type Question = {
-  is_correct: boolean;
-  stimulus: string;
-  order: number;
-  feedback: string;
-};
-
-export type Round = {
-  round_title: string;
-  order: number;
+export type FlowActivity = {
+  type: ActivityType.Flow;
+  name: string;
   questions: Array<Question>;
 };
 
-export type Activity =
-  | {
-      order: 1;
-      activity_name: string;
-      questions: Array<Question>;
-    }
-  | {
-      order: 2;
-      activity_name: string;
-      questions: Array<Round>;
-    };
-
-export type Game = {
+export type RoundsActivity = {
+  type: ActivityType.Rounds;
   name: string;
-  heading: string;
-  activities: Array<Activity>;
+  rounds: Array<Round>;
+};
+
+export type Activity = FlowActivity | RoundsActivity;
+
+export type Question = {
+  text: string;
+  num: number;
+};
+
+export type Round = {
+  name: string;
+  num: number;
+  questions: Array<Question>;
+};
+
+export type GameInfo = {
+  name: string;
+  activities: Array<FlowActivity | RoundsActivity>;
 };

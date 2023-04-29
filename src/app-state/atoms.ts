@@ -1,26 +1,37 @@
 import { atom, selector } from 'recoil';
-import { Game, GameState, GameStatus } from './state-types';
-import { getApiUrl } from '../api/api-fetcher';
+import { Answer, GameCurrents, GameInfo, GameStatus } from './state-types';
+import { getGameData } from '../api/api-fetch';
+import { convertToGameInfo } from '../api/api-helper';
 
-export const questionsSelector = selector<Game>({
-  key: 'questions',
+export const gameInfoSelector = selector<GameInfo>({
+  key: 'game-info',
   get: async () => {
-    const resp = await fetch(getApiUrl());
-    if (resp.ok) {
-      return await resp.json();
-    }
-
-    return null;
+    return convertToGameInfo(await getGameData());
   },
 });
 
-export const gameAtom = atom<GameState>({
-  key: 'game',
-  default: {
-    answers: [],
-    status: GameStatus.NotStarted,
-    currentRound: 0,
-    currentQuestion: 0,
-    currentActivity: 0,
-  },
+export const gameStatusAtom = atom<GameStatus>({
+  key: 'game-status',
+  default: GameStatus.NotStarted,
 });
+
+export const gameAnswersAtom = atom<Array<Answer>>({
+  key: 'game-answers',
+  default: [],
+});
+
+export const gameCurrentsAtom = atom<GameCurrents>({
+  key: 'game-currents',
+  default: { currentQuestion: 0, currentRound: 0, currentActivity: null },
+});
+
+// export const gameAtom = atom<GameState>({
+//   key: 'game',
+//   default: {
+//     answers: [],
+//     status: GameStatus.NotStarted,
+//     currentRound: 0,
+//     currentQuestion: 0,
+//     currentActivity: null,
+//   },
+// });

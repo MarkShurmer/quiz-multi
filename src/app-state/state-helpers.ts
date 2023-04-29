@@ -1,108 +1,69 @@
 import {
   Activity,
-  ActivityAnswers,
   ActivityType,
-  Game,
-  GameState,
+  FlowActivity,
+  GameCurrents,
   GameStatus,
   Question,
   Round,
+  RoundsActivity,
 } from './state-types';
 
-const numberMap: Record<number, string> = {
-  1: 'One',
-  2: 'Two',
-  3: 'Three',
-  4: 'Four',
-  5: 'Five',
-};
-
-export function getActivityType(activity: Activity) {
-  return activity.order === 1 ? ActivityType.Flow : ActivityType.Wait;
-}
-
-export function getActivityTypeByNumber(activityNumber: number) {
-  return activityNumber === 1 ? ActivityType.Flow : ActivityType.Wait;
-}
+// const numberMap: Record<number, string> = {
+//   1: 'One',
+//   2: 'Two',
+//   3: 'Three',
+//   4: 'Four',
+//   5: 'Five',
+// };
 
 export function getActivityTypeGameStatus(activity: Activity) {
-  return getActivityType(activity) === ActivityType.Flow
-    ? GameStatus.InFlowActivity
-    : GameStatus.InWaitActivity;
+  return activity.type === ActivityType.Flow ? GameStatus.InFlowActivity : GameStatus.InRoundsActivity;
 }
 
-export function getQuestionText(
-  activity: Activity,
-  questionNumber: number,
-  roundNumber = 0
-) {
+export function getQuestionText(activity: Activity, questionNumber: number, roundNumber = 0) {
   let question: Question;
 
-  if (getActivityTypeByNumber(activity.order) === ActivityType.Flow) {
+  if (activity.type === ActivityType.Flow) {
     question = activity.questions[questionNumber - 1] as Question;
   } else {
-    question = (activity.questions[roundNumber - 1] as Round).questions[
-      questionNumber - 1
-    ];
+    question = (activity.rounds[roundNumber - 1] as Round).questions[questionNumber - 1];
   }
 
-  return question.stimulus;
+  return question.text;
 }
 
-export function getNumberAsText(num: number) {
-  return numberMap[num];
-}
+// export function getNumberAsText(num: number) {
+//   return numberMap[num];
+// }
 
-export function getNextQuestion(
-  currentQuestion: number,
-  currentActivity: Activity,
-  currentRound: number
-) {
-  if (getActivityTypeByNumber(currentActivity.order) === ActivityType.Flow) {
-    // flows through, so just try to get next question
-    if (currentQuestion < currentActivity.questions.length) {
-      return currentQuestion + 1;
-    } else {
-      return 0; // we're done
-    }
-  }
-
-  // check for rounds
-  if (
-    currentQuestion <
-    (currentActivity.questions[currentRound] as Round).questions.length
-  ) {
+export function getNextFlowQuestion(currentQuestion: number, currentActivity: FlowActivity) {
+  // flows through, so just try to get next question
+  if (currentQuestion < currentActivity.questions.length) {
     return currentQuestion + 1;
   }
 
+  return 0; // we're done
+}
+
+export function getNextRoundsQuestion(
+  currentQuestion: number,
+  currentActivity: RoundsActivity,
+  currentRound: number
+): [number, GameStatus] {
+  // check for rounds
+  if (currentQuestion < (currentActivity.rounds[currentRound - 1] as Round).questions.length) {
+    return [currentQuestion + 1, GameStatus.InRoundsActivity];
+  }
+
   // we've reached end of the round
-  return 0;
+  return [0, GameStatus.ShowEndOfRound];
 }
 
-export function generateActivityAnswer(
-  gameState: GameState,
-  isCorrect: boolean
-) {
-  // get existing answer list for activity
-  let activityAnswer: ActivityAnswers | undefined = undefined;
-  const existingActivityAnswer: ActivityAnswers | undefined =
-    gameState.answers.find(
-      (aa) => aa.activity === gameState.currentActivity.order
-    );
-
-  activityAnswer = {
-    activity: gameState.currentActivity.order,
-    answers: existingActivityAnswer ? [...existingActivityAnswer.answers] : [],
-  };
-
-  // add the answer
-  activityAnswer.answers.push({
+export function generateAnswer(gameCurrents: GameCurrents, isCorrect: boolean) {
+  return {
     answer: isCorrect,
-    question: gameState.currentQuestion,
-    round: gameState.currentRound,
-  });
-
-  return activityAnswer;
+    question: gameCurrents.currentQuestion,
+    round: gameCurrents.currentRound,
+  };
 }
-
-export function getNextRound(currentActivity: Activity) {}
