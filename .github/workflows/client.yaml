@@ -14,9 +14,6 @@ jobs:
   verify:
     name: ⬣ Verify
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: server
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
@@ -30,7 +27,7 @@ jobs:
         with:
           node-version: 18.5.0
           cache: 'yarn'
-          cache-dependency-path: server/yarn.lock
+          cache-dependency-path: yarn.lock
 
       - name: Run install
         run: yarn install --frozen-lockfile
