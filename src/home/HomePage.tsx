@@ -29,16 +29,16 @@ export function HomePage() {
 
       <ul className="list">
         {gameInfo.activities.map((act) => (
-          <li key={act.name}>
-            <div className="item" onClick={() => startActivity(act)} role="link">
+          <li key={act.name} className="item">
+            <div className="item-text" onClick={() => startActivity(act)} role="link">
               {act.name}
             </div>
           </li>
         ))}
 
         {['three', 'four', 'five'].map((inactive) => (
-          <li key={inactive}>
-            <div className="item inactive-item" role="link">
+          <li key={inactive} className="item">
+            <div className="inactive-item-text" role="link">
               Activity {inactive}
             </div>
           </li>

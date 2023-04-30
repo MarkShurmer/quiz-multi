@@ -1,15 +1,15 @@
 export type ActivityHeaderProps = {
   header: string;
-  questionNumber: number;
+  subHeader: string;
 };
 
 export default function ActivityHeader(props: ActivityHeaderProps) {
-  const { header, questionNumber } = props;
+  const { header, subHeader } = props;
 
   return (
     <header className="page-header">
       <h1>{header}</h1>
-      <h2>Q{questionNumber}.</h2>
+      <h2>{subHeader}</h2>
     </header>
   );
 }

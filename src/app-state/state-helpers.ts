@@ -30,7 +30,7 @@ export function getQuestionText(activity: Activity, questionNumber: number, roun
     question = (activity.rounds[roundNumber - 1] as Round).questions[questionNumber - 1];
   }
 
-  return question.text;
+  return applyTextStyling(question.text);
 }
 
 // export function getNumberAsText(num: number) {
@@ -66,4 +66,10 @@ export function generateAnswer(gameCurrents: GameCurrents, isCorrect: boolean) {
     question: gameCurrents.currentQuestion,
     round: gameCurrents.currentRound,
   };
+}
+
+export function applyTextStyling(textToChange: string) {
+  // we'll keep it simple, as theres only ever one section of text to be boldened
+
+  return textToChange.replace('*', '<b>').replace('*', '</b>');
 }

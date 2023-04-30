@@ -12,7 +12,7 @@
   }
 }
 
-ul {
+.list {
   border-bottom: 1px solid #eef6fe;
 
   /* turn off browser defaults */
@@ -22,21 +22,30 @@ ul {
   margin-inline-end: 0px;
   padding-inline-start: 0px;
   font-size: medium;
+  width: 100%;
 }
 
-li {
+.item {
   list-style-type: none;
   padding: 1rem;
   border-top: 1px solid #bfe1fd;
   background-color: #fcfdff;
 }
 
-.inactive-item {
-  color: #dfdfe0;
+.item-text {
+  text-transform: uppercase;
+}
+.item-text:hover {
+  cursor: pointer;
 }
 
-.item {
+.inactive-item-text {
+  color: #dfdfe0;
   text-transform: uppercase;
+}
+.inactive-item-text:hover {
+  color: #dfdfe099;
+  cursor: default;
 }
 
 .results {
