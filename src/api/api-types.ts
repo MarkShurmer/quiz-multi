@@ -1,33 +1,32 @@
-/* c8 ignore next 50 */
 export type Game = {
-  name: string;
-  heading: string;
-  activities: Array<FlowActivity | RoundsActivity>;
+    name: string;
+    heading: string;
+    activities: Array<FlowActivity | RoundsActivity>;
 };
 
 export type FlowActivity = {
-  order: number;
-  activity_name: string;
-  questions: Array<Question>;
+    order: number;
+    activity_name: string;
+    questions: Array<Question>;
 };
 
 export type RoundsActivity = {
-  order: number;
-  activity_name: string;
-  questions: Array<Round>;
+    order: number;
+    activity_name: string;
+    questions: Array<Round>;
 };
 
 export type Activity = FlowActivity | RoundsActivity;
 
 export type Question = {
-  is_correct: boolean;
-  stimulus: string;
-  order: number;
-  feedback: string;
+    is_correct: boolean;
+    stimulus: string;
+    order: number;
+    feedback: string;
 };
 
 export type Round = {
-  round_title: string;
-  order: number;
-  questions: Array<Question>;
+    round_title: string;
+    order: number;
+    questions: Array<Question>;
 };

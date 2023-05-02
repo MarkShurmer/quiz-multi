@@ -1,52 +1,58 @@
 import './Home.css';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { gameAnswersAtom, gameCurrentsAtom, gameInfoSelector, gameStatusAtom } from '../app-state/atoms';
-import { Activity, Answer, GameCurrents, GameStatus } from '../app-state/state-types';
-import { getActivityTypeGameStatus } from '../app-state/state-helpers';
+import { useRecoilState } from 'recoil';
+import { gameActivityAtom, gameAnswersAtom, gameStatusAtom } from '../app-state/atoms';
+import { FlowActivity, GameInfo, RoundsActivity, StepType } from '../app-state/state-types';
+import { getGameInfo } from '../app-state/game-info';
+import { getFirstStep } from '../app-state/state-machine';
+import { useEffect, useState } from 'react';
 
 export function HomePage() {
-  const gameInfo = useRecoilValue(gameInfoSelector);
-  const [gameStatus, setGameStatus] = useRecoilState<GameStatus>(gameStatusAtom);
-  const [, setGameCurrents] = useRecoilState<GameCurrents>(gameCurrentsAtom);
-  const [, setGameAnswers] = useRecoilState<Array<Answer>>(gameAnswersAtom);
+    const [gameStatus, setGameStatus] = useRecoilState(gameStatusAtom);
+    const [, setGameAnswers] = useRecoilState(gameAnswersAtom);
+    const [, setGameActivity] = useRecoilState(gameActivityAtom);
+    const [gameInfo, setGameInfo] = useState<GameInfo>({ name: '', activities: [] });
 
-  const startActivity = (act: Activity) => {
-    setGameStatus(getActivityTypeGameStatus(act));
-    setGameCurrents({
-      currentActivity: act,
-      currentQuestion: 1,
-      currentRound: 1,
-    });
-    setGameAnswers([]);
-  };
+    const startActivity = (act: FlowActivity | RoundsActivity) => {
+        setGameStatus(getFirstStep(act.activityNumber));
+        setGameAnswers([]);
+        setGameActivity(act);
+    };
 
-  return (
-    <section className="page-container page-container-home">
-      <header className="page-header">
-        <h1>CAE</h1>
-        <h2>{gameInfo.name}</h2>
-      </header>
+    useEffect(() => {
+        (async () => setGameInfo(await getGameInfo()))();
+    }, []);
 
-      <ul className="list">
-        {gameInfo.activities.map((act) => (
-          <li key={act.name}>
-            <div className="item" onClick={() => startActivity(act)} role="link">
-              {act.name}
-            </div>
-          </li>
-        ))}
+    return (
+        <section className="page-container page-container-home">
+            <header className="page-header">
+                <h1>CAE</h1>
+                <h2>{gameInfo.name}</h2>
+            </header>
 
-        {['three', 'four', 'five'].map((inactive) => (
-          <li key={inactive}>
-            <div className="item inactive-item" role="link">
-              Activity {inactive}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <button aria-label="Results" className="results" disabled={gameStatus === GameStatus.NotStarted}>
-        RESULTS
-      </button>
-    </section>
-  );
+            <ul className="list">
+                {gameInfo.activities.map((act) => (
+                    <li key={act.name} className="item">
+                        <div className="item-text" onClick={() => startActivity(act)} role="link">
+                            {act.name}
+                        </div>
+                    </li>
+                ))}
+
+                {['three', 'four', 'five'].map((inactive) => (
+                    <li key={inactive} className="item">
+                        <div className="inactive-item-text" role="link">
+                            Activity {inactive}
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            <button
+                aria-label="Results"
+                className="results"
+                disabled={gameStatus.stepType !== StepType.StartWithResults}
+            >
+                RESULTS
+            </button>
+        </section>
+    );
 }

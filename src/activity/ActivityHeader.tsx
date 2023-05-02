@@ -1,15 +1,24 @@
+import { ActivityType } from '../app-state/state-types';
+import { GameStep } from '../app-state/state-types';
+import { RoundsActivity, FlowActivity } from '../app-state/state-types';
+
 export type ActivityHeaderProps = {
-  header: string;
-  questionNumber: number;
+    activity: FlowActivity | RoundsActivity;
+    currentStep: GameStep;
 };
 
 export default function ActivityHeader(props: ActivityHeaderProps) {
-  const { header, questionNumber } = props;
+    const { activity, currentStep } = props;
 
-  return (
-    <header className="page-header">
-      <h1>{header}</h1>
-      <h2>Q{questionNumber}.</h2>
-    </header>
-  );
+    return (
+        <header className="page-header">
+            <h1>
+                {activity.name}
+                {activity.type === ActivityType.Rounds
+                    ? ` / ROUND ${currentStep.round}`
+                    : null}{' '}
+            </h1>
+            <h2>Q{currentStep.question}.</h2>
+        </header>
+    );
 }

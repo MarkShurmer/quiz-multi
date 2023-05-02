@@ -10,21 +10,22 @@ import mockData from '../public/data.json';
 // };
 
 const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>,
-  initialStateSetter?: (mutableSnapshot: MutableSnapshot) => void
+    ui: ReactElement,
+    options?: Omit<RenderOptions, 'wrapper'>,
+    initialStateSetter?: (mutableSnapshot: MutableSnapshot) => void
 ) => render(<RecoilRoot initializeState={initialStateSetter}>{ui}</RecoilRoot>, options);
 
+export type RecoilChangeEvent<T> = (value: T) => void;
 export type RecoilObserverProps<T> = {
-  node: RecoilValue<T>;
-  onChange: (value: T) => void;
+    node: RecoilValue<T>;
+    onChange: RecoilChangeEvent<T>;
 };
 
 export const RecoilObserver = (props: RecoilObserverProps<unknown>) => {
-  const { node, onChange } = props;
-  const value = useRecoilValue(node);
-  useEffect(() => onChange(value), [onChange, value]);
-  return null;
+    const { node, onChange } = props;
+    const value = useRecoilValue(node);
+    useEffect(() => onChange(value), [onChange, value]);
+    return null;
 };
 
 export const getMockQuestions = () => convertToGameInfo(mockData);

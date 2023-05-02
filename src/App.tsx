@@ -1,30 +1,37 @@
-import './App.css';
 import { useRecoilValue } from 'recoil';
 import { gameStatusAtom } from './app-state/atoms';
 import { HomePage } from './home/HomePage';
-import { GameStatus } from './app-state/state-types';
-import { Round } from './round/Round';
+import { StepType } from './app-state/state-types';
+import { EndOfRoundPage } from './activity/EndOfRoundPage';
 import { Score } from './score/Score';
-import { FlowActivityPage } from './flow-activity/FlowActivityPage';
+import { ActivityPage } from './activity/ActivityPage';
+import { createMachines } from './app-state/state-machine';
+import { useEffect } from 'react';
+import './App.css';
 
 function App() {
-  const gameStatus = useRecoilValue(gameStatusAtom);
+    const gameStatus = useRecoilValue(gameStatusAtom);
 
-  const renderPage = () => {
-    switch (gameStatus) {
-      case GameStatus.NotStarted:
-      case GameStatus.ShowHome:
-        return <HomePage />;
-      case GameStatus.InFlowActivity:
-        return <FlowActivityPage />;
-      case GameStatus.InRoundsActivity:
-        return <Round />;
-      default:
-        return <Score />;
-    }
-  };
+    useEffect(() => {
+        // set up the machines
+        createMachines();
+    }, []);
 
-  return <>{renderPage()}</>;
+    const renderPage = () => {
+        switch (gameStatus.step.type) {
+            case StepType.Start:
+            case StepType.StartWithResults:
+                return <HomePage />;
+            case StepType.Question:
+                return <ActivityPage />;
+            case StepType.EndOfRound:
+                return <EndOfRoundPage />;
+            default:
+                return <Score />;
+        }
+    };
+
+    return <>{renderPage()}</>;
 }
 
 export default App;
