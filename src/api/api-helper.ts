@@ -43,6 +43,8 @@ export function convertToGameInfo(gameInfo: apiContracts.Game): GameInfo {
 
   result.activities = gameInfo.activities.map((act) => {
     const activityType = getActivityType(act);
+
+    // get the hierarchy correct for each type
     const res =
       activityType === ActivityType.Flow
         ? ({
@@ -55,19 +57,12 @@ export function convertToGameInfo(gameInfo: apiContracts.Game): GameInfo {
           } as RoundsActivity);
 
     res.name = act.activity_name;
+    res.activityNumber = act.order;
 
     return res;
   });
 
+  // make sure they are sorted correctly
+  result.activities.sort((lhs, rhs) => lhs.activityNumber - rhs.activityNumber);
   return result;
 }
-
-// export function fetcher(url: string): Promise<GameQuestions> {
-//   return fetch(url).then((resp) => {
-//     if (resp.ok) {
-//       return convertToGameInfo(resp.json());
-//     }
-//     // bad response, so throw
-//     throw new Error(resp.statusText);
-//   });
-// }

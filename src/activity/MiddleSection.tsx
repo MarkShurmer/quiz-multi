@@ -1,18 +1,13 @@
 import parse from 'html-react-parser';
 
 export type MiddleSectionProps = {
-  text: string;
+    text: string;
 };
 
 export default function MiddleSection(props: MiddleSectionProps) {
-  const { text } = props;
+    const { text } = props;
 
-  const insertion = `<span className="page-question-text">${text}</span>`;
+    const insertion = `<span className="page-question-text" role="contentinfo">${text}</span>`;
 
-  return (
-    <div className="page-question">
-      {/* <span className="page-question-text">{text}</span> */}
-      {parse(insertion)}
-    </div>
-  );
+    return <div className="page-question">{parse(insertion)}</div>;
 }
