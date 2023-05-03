@@ -25,7 +25,7 @@ jobs:
               with:
                   node-version: 18.5.0
                   cache: 'yarn'
-                  cache-dependency-path: yarn.lock/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+                  cache-dependency-path: yarn.lock
 
             - name: Run install
               run: yarn install --frozen-lockfile
