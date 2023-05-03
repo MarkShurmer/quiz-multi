@@ -5,6 +5,7 @@ on:
             - master
         paths:
             - server/**/*
+    pull_request: {}
 permissions:
     actions: write
     contents: read
@@ -41,7 +42,7 @@ jobs:
               run: yarn test:ci
 
     deploy:
-        name: ⬣ Verify
+        name: ⬣ Deploy
         runs-on: ubuntu-latest
         concurrency:
             group: ${{ github.ref }}
@@ -57,6 +58,7 @@ jobs:
                   node-version: 18.5.0
                   cache: 'yarn'
                   cache-dependency-path: yarn.lock
+
             - run: yarn install --frozen-lockfile
             - run: yarn build
 
