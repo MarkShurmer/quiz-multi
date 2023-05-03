@@ -14,7 +14,14 @@ export default defineConfig({
             ...coverageConfigDefaults,
             provider: 'c8',
             all: true,
-            exclude: ['src/main.tsx', '**/*.d.ts', 'vite.*.ts', '*.cjs', '**/*.test.ts*'],
+            exclude: [
+                'src/main.tsx',
+                '**/*.d.ts',
+                'vite.*.ts',
+                '*.cjs',
+                '**/*.test.ts*',
+                'dist/**/*.*',
+            ],
         },
     },
 });
