@@ -4,7 +4,6 @@ import { gameStatusAtom, gameActivityAtom } from './app-state/atoms';
 import { getStep } from './app-state/state-machine';
 import App from './App';
 import { test, expect } from 'vitest';
-import { getGameInfo } from './app-state/game-info';
 
 const info = getMockQuestions();
 const initializeState = ({ set }: MutableSnapshot) => {
