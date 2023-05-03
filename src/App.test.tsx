@@ -18,10 +18,12 @@ test('App - shows home page when step type is Start', async () => {
     });
 });
 
-test('App - shows home page when step type is Start with results', () => {
+test('App - shows home page when step type is Start with results', async () => {
     render(<App />, {}, initializeState);
 
-    expect(screen.getByRole('main')).toBeDefined();
+    await waitFor(() => {
+        expect(screen.getByRole('main')).toBeDefined();
+    });
 });
 
 test('App - shows home page with results enabled when step type is Start with results', () => {
