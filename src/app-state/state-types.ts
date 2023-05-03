@@ -61,8 +61,3 @@ export type GameStep = {
     round: number;
     question: number;
 };
-
-// export type GameStatus = {
-//     stepNumber: number;
-//     step: GameStep;
-// };

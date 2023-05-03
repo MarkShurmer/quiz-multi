@@ -1,8 +1,15 @@
 .answer-block {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 15% 1.5rem 15%;
+}
+
+.end-of-round-block {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 15% 1.5rem 15%;
 }
 
 .answer-btn {
-  padding: 3rem 4.5rem 3rem 4.5rem;
+    font-size: 0.6rem;
 }

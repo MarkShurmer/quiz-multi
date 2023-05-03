@@ -148,6 +148,6 @@ button:focus-visible {
 .cta {
     margin-top: 2rem;
     margin-bottom: 2rem;
-    font-size: small;
+    font-size: 0.6rem;
     color: #2c9cfb;
 }

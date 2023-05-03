@@ -6,9 +6,10 @@ import { EndOfRoundPage } from './activity/EndOfRoundPage';
 import { FlowResultsPage } from './results/FlowResultsPage';
 import { ActivityPage } from './activity/ActivityPage';
 import { createMachines } from './app-state/state-machine';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import './App.css';
 import { RoundsResultsPage } from './results/RoundsResultsPage';
+import Loading from './loading/Loading';
 
 function App() {
     const gameStatus = useRecoilValue(gameStatusAtom);
@@ -22,7 +23,11 @@ function App() {
         switch (gameStatus.stepType) {
             case StepType.Start:
             case StepType.StartWithResults:
-                return <HomePage />;
+                return (
+                    <Suspense fallback=<Loading />>
+                        <HomePage />
+                    </Suspense>
+                );
             case StepType.Question:
                 return <ActivityPage />;
             case StepType.EndOfRound:

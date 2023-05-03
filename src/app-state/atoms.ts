@@ -1,12 +1,13 @@
-import { atom } from 'recoil';
-import { Activity, ActivityType, Answer, GameStep, StepType } from './state-types';
+import { atom, selector } from 'recoil';
+import { Activity, ActivityType, Answer, GameInfo, GameStep, StepType } from './state-types';
+import { getGameInfo } from './game-info';
 
-// export const gameInfoSelector = selector<GameInfo>({
-//   key: 'game-info',
-//   get: async () => {
-//     return convertToGameInfo(await getGameData());
-//   },
-// });
+export const gameInfoSelector = selector<GameInfo>({
+    key: 'game-info',
+    get: async () => {
+        return getGameInfo();
+    },
+});
 
 export const gameStatusAtom = atom<GameStep>({
     key: 'game-status',

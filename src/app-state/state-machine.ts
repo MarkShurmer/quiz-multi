@@ -104,6 +104,16 @@ export function getFirstStep(activityNumber: number) {
     return activityMachine[0];
 }
 
+export function getResultStep(activityNumber: number) {
+    const activityMachine = stateMachines.get(activityNumber);
+
+    if (!activityMachine || activityMachine.length === 0) {
+        throw new Error('Activity not found');
+    }
+
+    return activityMachine[activityMachine.length - 2];
+}
+
 export function getNextStep(currentStep: GameStep) {
     const activityMachine = stateMachines.get(currentStep.activityNumber);
 

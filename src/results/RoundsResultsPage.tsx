@@ -34,14 +34,14 @@ export function RoundsResultsPage() {
                 {currentActivity.rounds.map((round) => (
                     <>
                         <li key={`hdr_${round.num}`} className="item">
-                            <div className="item-text" role="contentinfo">
+                            <div className="round-text" role="contentinfo">
                                 ROUND {round.num}
                             </div>
                         </li>
                         <li key={`rnd_${round.num}`} className="result-question-item">
                             <ul className="result-question-item">
                                 {round.questions.map((question) => (
-                                    <li className="item result-item">
+                                    <li className="item result-item" key={`qst_${question.num}`}>
                                         <div className="item-text" data-testid="question">
                                             Q{question.num}
                                         </div>
@@ -58,18 +58,7 @@ export function RoundsResultsPage() {
                     </>
                 ))}
             </ul>
-            {/* <ul className="list">
-                {gameAnswers.map((answer, index) => (
-                    <li key={index} className="item result-item">
-                        <div className="item-text" role="contentinfo">
-                            Q{answer.question}
-                        </div>
-                        <div className="item-text item-text-answer" role="contentinfo">
-                            {getAnswerText(answer.answer)}
-                        </div>
-                    </li>
-                ))}
-            </ul> */}
+
             <button aria-label="Home" className="cta" onClick={gotoHome}>
                 HOME
             </button>
