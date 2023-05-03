@@ -1,11 +1,10 @@
 name: 🚀 Client
 on:
-    pull_request:
+    push:
         branches:
             - master
-        paths:
-            - server/**/*
     pull_request: {}
+
 permissions:
     actions: write
     contents: read
