@@ -1,6 +1,7 @@
-import { ActivityType } from '../app-state/state-types';
+import { ActivityType } from '../app-state/state-types.ts';
 import { convertToGameInfo } from './api-helper';
 import { test, expect, vi } from 'vitest';
+import * as apiContracts from './api-types';
 
 test('should convert empty correctly', () => {
     const result = convertToGameInfo({
@@ -37,7 +38,7 @@ test('should convert flow activity correctly', () => {
                 ],
             },
         ],
-    });
+    } as apiContracts.Game);
 
     expect(result).toEqual({
         name: 'game2',
@@ -85,7 +86,7 @@ test('should convert rounds activity correctly', () => {
                 ],
             },
         ],
-    });
+    } as apiContracts.Game);
 
     expect(result).toEqual({
         name: 'game2',

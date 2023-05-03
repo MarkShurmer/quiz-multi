@@ -13,7 +13,8 @@ export enum StepType {
     Start,
     Question,
     EndOfRound,
-    Results,
+    ResultsFlow,
+    ResultsRounds,
     StartWithResults,
 }
 
@@ -60,8 +61,3 @@ export type GameStep = {
     round: number;
     question: number;
 };
-
-// export type GameStatus = {
-//     stepNumber: number;
-//     step: GameStep;
-// };

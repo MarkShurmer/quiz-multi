@@ -22,10 +22,10 @@ export function EndOfRoundPage() {
         <section className="page-container">
             <header className="page-header">
                 <h1>{currentActivity.name}</h1>
-                <h2>{`ROUND ${gameStatus.round}.`}</h2>
+                <h2>{`ROUND ${gameStatus.round}`}</h2>
             </header>
             <MiddleSection text={getInfoText()} />
-            <div className="answer-block">
+            <div className="end-of-round-block">
                 <button className="answer-btn" onClick={handleNext}>
                     next
                 </button>

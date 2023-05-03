@@ -22,7 +22,7 @@ const initializeState = ({ set }: MutableSnapshot) => {
 test('End of Round page - shows header correctly', () => {
     render(<EndOfRoundPage />, {}, initializeState);
 
-    expect(screen.getByText('ROUND 1.')).toBeDefined();
+    expect(screen.getByText('ROUND 1')).toBeDefined();
 });
 
 test('End of Round page - shows text correctly for first round', () => {
@@ -106,6 +106,6 @@ test('End of Round page - pressing next button on last round advances to results
         activityType: ActivityType.Rounds,
         question: 0,
         round: 0,
-        stepType: StepType.Results,
+        stepType: StepType.ResultsRounds,
     } as GameStep);
 });

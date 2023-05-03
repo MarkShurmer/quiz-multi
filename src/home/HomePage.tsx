@@ -1,16 +1,18 @@
-import './Home.css';
-import { useRecoilState } from 'recoil';
-import { gameActivityAtom, gameAnswersAtom, gameStatusAtom } from '../app-state/atoms';
-import { FlowActivity, GameInfo, RoundsActivity, StepType } from '../app-state/state-types';
-import { getGameInfo } from '../app-state/game-info';
-import { getFirstStep } from '../app-state/state-machine';
-import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+    gameActivityAtom,
+    gameAnswersAtom,
+    gameInfoSelector,
+    gameStatusAtom,
+} from '../app-state/atoms';
+import { FlowActivity, RoundsActivity, StepType } from '../app-state/state-types';
+import { getFirstStep, getResultStep } from '../app-state/state-machine';
 
 export function HomePage() {
     const [gameStatus, setGameStatus] = useRecoilState(gameStatusAtom);
     const [, setGameAnswers] = useRecoilState(gameAnswersAtom);
-    const [, setGameActivity] = useRecoilState(gameActivityAtom);
-    const [gameInfo, setGameInfo] = useState<GameInfo>({ name: '', activities: [] });
+    const [gameActivity, setGameActivity] = useRecoilState(gameActivityAtom);
+    const gameInfo = useRecoilValue(gameInfoSelector);
 
     const startActivity = (act: FlowActivity | RoundsActivity) => {
         setGameStatus(getFirstStep(act.activityNumber));
@@ -18,12 +20,12 @@ export function HomePage() {
         setGameActivity(act);
     };
 
-    useEffect(() => {
-        (async () => setGameInfo(await getGameInfo()))();
-    }, []);
+    const gotoResults = () => {
+        setGameStatus(getResultStep(gameActivity.activityNumber));
+    };
 
     return (
-        <section className="page-container page-container-home">
+        <section className="page-container page-container-home" role="main">
             <header className="page-header">
                 <h1>CAE</h1>
                 <h2>{gameInfo.name}</h2>
@@ -48,8 +50,9 @@ export function HomePage() {
             </ul>
             <button
                 aria-label="Results"
-                className="results"
+                className="cta"
                 disabled={gameStatus.stepType !== StepType.StartWithResults}
+                onClick={gotoResults}
             >
                 RESULTS
             </button>
