@@ -24,7 +24,7 @@ function App() {
             case StepType.Start:
             case StepType.StartWithResults:
                 return (
-                    <Suspense fallback=<Loading />>
+                    <Suspense fallback={<Loading />}>
                         <HomePage />
                     </Suspense>
                 );

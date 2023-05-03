@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react-swc';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react()],
+    build: {
+        target: 'esnext',
+    },
     test: {
         environment: 'jsdom',
         setupFiles: './setup/setup-tests.ts',
@@ -11,7 +14,14 @@ export default defineConfig({
             ...coverageConfigDefaults,
             provider: 'c8',
             all: true,
-            exclude: ['src/main.tsx', '**/*.d.ts', 'vite.*.ts', '*.cjs', '**/*.test.ts*'],
+            exclude: [
+                'src/main.tsx',
+                '**/*.d.ts',
+                'vite.*.ts',
+                '*.cjs',
+                '**/*.test.ts*',
+                'dist/**/*.*',
+            ],
         },
     },
 });
