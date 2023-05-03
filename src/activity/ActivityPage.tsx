@@ -26,7 +26,7 @@ export function ActivityPage() {
     };
 
     return (
-        <section className="page-container">
+        <section className="page-container" role="article">
             <ActivityHeader activity={currentActivity} currentStep={gameStatus} />
             <MiddleSection text={getText()} />
             <AnswerSection onAnswer={handleAnswer} />

@@ -1,3 +1,5 @@
+/* c8 ignore next 35 */
+
 export type Game = {
     name: string;
     heading: string;

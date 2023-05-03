@@ -31,7 +31,8 @@ test('Activity page - shows header correctly for rounds', () => {
     };
     render(<ActivityPage />, {}, initializeState);
 
-    expect(screen.getByText('Activity One')).toBeDefined();
+    expect(screen.getByTestId('sub-header-1')).toHaveTextContent('Activity Two');
+    expect(screen.getByTestId('sub-header-2')).toHaveTextContent('ROUND 1');
 });
 
 test('Activity page - shows question correctly', async () => {
@@ -111,6 +112,6 @@ test('Activity page - pressing incorrect button advances to results when on last
         question: 0,
         activityType: ActivityType.Flow,
         round: 0,
-        stepType: StepType.Results,
+        stepType: StepType.ResultsFlow,
     } as GameStep);
 });

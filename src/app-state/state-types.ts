@@ -13,7 +13,8 @@ export enum StepType {
     Start,
     Question,
     EndOfRound,
-    Results,
+    ResultsFlow,
+    ResultsRounds,
     StartWithResults,
 }
 

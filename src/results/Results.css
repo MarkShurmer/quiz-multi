@@ -1,0 +1,14 @@
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.item-text-answer {
+    font-weight: 700;
+}
+
+.result-question-item {
+    padding: 0;
+}

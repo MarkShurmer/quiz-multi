@@ -1,4 +1,3 @@
-import './Home.css';
 import { useRecoilState } from 'recoil';
 import { gameActivityAtom, gameAnswersAtom, gameStatusAtom } from '../app-state/atoms';
 import { FlowActivity, GameInfo, RoundsActivity, StepType } from '../app-state/state-types';
@@ -23,7 +22,7 @@ export function HomePage() {
     }, []);
 
     return (
-        <section className="page-container page-container-home">
+        <section className="page-container page-container-home" role="main">
             <header className="page-header">
                 <h1>CAE</h1>
                 <h2>{gameInfo.name}</h2>
@@ -48,7 +47,7 @@ export function HomePage() {
             </ul>
             <button
                 aria-label="Results"
-                className="results"
+                className="cta"
                 disabled={gameStatus.stepType !== StepType.StartWithResults}
             >
                 RESULTS

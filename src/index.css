@@ -1,59 +1,59 @@
 :root {
-  font-family: Inter, system-ui, Roboto, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: Inter, system-ui, Roboto, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  /* font-weight: 500; */
-  color: #2c9cfb;
-  text-decoration: inherit;
+    /* font-weight: 500; */
+    color: #2c9cfb;
+    text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+    color: #535bf2;
 }
 
 body {
-  margin: 5rem;
+    margin: 5rem;
 
-  min-width: 320px;
-  min-height: 100vh;
-  color: #2c9cfb;
-  background-color: #f1f9ff;
-  text-align: center;
+    min-width: 320px;
+    min-height: 100vh;
+    color: #2c9cfb;
+    background-color: #f1f9ff;
+    text-align: center;
 }
 
 h1 {
-  font-size: 0.75rem;
-  text-align: left;
-  text-transform: uppercase;
+    font-size: 0.75rem;
+    text-align: left;
+    text-transform: uppercase;
 }
 
 h2 {
-  font-size: 3rem;
-  text-align: left;
+    font-size: 3rem;
+    text-align: left;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  font-family: inherit;
-  background-color: #ffffff;
-  color: #2c9cfb;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    background-color: #ffffff;
+    color: #2c9cfb;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: border-color 0.25s;
 }
 button:disabled {
-  color: #dfdfe0;
+    color: #dfdfe0;
 }
 /* button:hover {
   border-color: #646cff; 
@@ -64,33 +64,90 @@ button:focus-visible {
 } */
 
 .page-container {
-  background-color: #ffffff;
-  border: 1px solid #e7f4fe;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  justify-content: stretch;
-  align-items: stretch;
-  min-width: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e7f4fe;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: stretch;
+    align-items: stretch;
+    min-width: 50%;
 }
 
 .page-header {
-  padding: 3rem;
+    padding: 3rem 3rem 2rem 3rem;
 }
 
 .page-question {
-  padding: 1.6rem 4rem 1.6rem 4rem;
-  border-top: 1px solid #bfe1fd;
-  background-color: #fcfdff;
-  border-bottom: 1px solid #bfe1fd;
+    padding: 1.6rem 4rem 1.6rem 4rem;
+    border-top: 1px solid #bfe1fd;
+    background-color: #fcfdff;
+    border-bottom: 1px solid #bfe1fd;
 }
 
 .page-question-text {
-  width: 100%;
+    width: 100%;
 }
 
 #root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-container-home {
+    min-width: 20%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    & h1 {
+        text-align: center;
+    }
+
+    & h2 {
+        text-align: center;
+    }
+}
+
+.list {
+    border-bottom: 1px solid #eef6fe;
+
+    /* turn off browser defaults */
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    font-size: medium;
+    width: 100%;
+}
+
+.item {
+    list-style-type: none;
+    padding: 1rem;
+    border-top: 1px solid #bfe1fd;
+    background-color: #fcfdff;
+}
+
+.item-text {
+    text-transform: uppercase;
+}
+.item-text:hover {
+    cursor: pointer;
+}
+
+.inactive-item-text {
+    color: #dfdfe0;
+    text-transform: uppercase;
+}
+.inactive-item-text:hover {
+    color: #dfdfe099;
+    cursor: default;
+}
+
+.cta {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: small;
+    color: #2c9cfb;
 }

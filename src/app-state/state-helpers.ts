@@ -35,6 +35,10 @@ export function getQuestionText(activity: ActivityBase, gameStep: GameStep) {
     return applyTextStyling(question.text);
 }
 
+export function getAnswerText(answer: boolean) {
+    return answer ? 'CORRECT' : 'FALSE';
+}
+
 // export function getNumberAsText(num: number) {
 //   return numberMap[num];
 // }

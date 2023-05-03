@@ -1,17 +1,7 @@
 import { getFlowActivities, getRoundsActivities } from './game-info';
-import { StepType, GameStep, Activity } from './state-types';
+import { StepType, GameStep, Activity, ActivityType } from './state-types';
 
 const stateMachines: Map<number, Array<GameStep>> = new Map();
-
-// function createStartStep(act: FlowActivity | RoundsActivity) {
-//     return {
-//         activityNumber: act.activityNumber,
-//         activityType: act.type,
-//         round: 0,
-//         question: 0,
-//         status: GameStatus.Start,
-//     };
-// }
 
 function createFinalStep(act: Activity, stepNumber: number) {
     return {
@@ -29,7 +19,7 @@ function createResultStep(act: Activity, stepNumber: number) {
         activityType: act.type,
         activityNumber: act.activityNumber,
         round: 0,
-        stepType: StepType.Results,
+        stepType: act.type === ActivityType.Flow ? StepType.ResultsFlow : StepType.ResultsRounds,
         stepNumber,
         question: 0,
     } as GameStep;
@@ -41,15 +31,6 @@ export async function createMachines() {
 
     flowActivities.forEach((act) => {
         const steps = [];
-        // // start step
-        // const startStep: GameStep = {
-        //     activityNumber: act.activityNumber,
-        //     activityType: act.type,
-        //     round: 0,
-        //     question: 0,
-        //     type: StepType.Start,
-        // };
-        // steps.push(startStep);
 
         // create a step for each question
         act.questions.forEach((question) => {
@@ -111,8 +92,6 @@ export async function createMachines() {
 
         stateMachines.set(act.activityNumber, steps);
     });
-
-    console.log('> sm > ', stateMachines);
 }
 
 export function getFirstStep(activityNumber: number) {

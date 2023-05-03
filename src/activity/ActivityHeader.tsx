@@ -13,10 +13,10 @@ export default function ActivityHeader(props: ActivityHeaderProps) {
     return (
         <header className="page-header">
             <h1>
-                {activity.name}
-                {activity.type === ActivityType.Rounds
-                    ? ` / ROUND ${currentStep.round}`
-                    : null}{' '}
+                <span data-testid="sub-header-1">{activity.name}</span>
+                <span data-testid="sub-header-2">
+                    {activity.type === ActivityType.Rounds ? ` / ROUND ${currentStep.round}` : null}
+                </span>
             </h1>
             <h2>Q{currentStep.question}.</h2>
         </header>

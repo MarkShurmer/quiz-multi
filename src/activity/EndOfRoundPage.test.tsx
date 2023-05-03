@@ -106,6 +106,6 @@ test('End of Round page - pressing next button on last round advances to results
         activityType: ActivityType.Rounds,
         question: 0,
         round: 0,
-        stepType: StepType.Results,
+        stepType: StepType.ResultsFlow,
     } as GameStep);
 });
